@@ -214,6 +214,7 @@ def search_books(request):
     category = request.GET.get('category')
     categories = Category.objects.all()
     user = request.user
+    fav = None
 
     if query:
         books = Book.objects.filter(
