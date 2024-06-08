@@ -4,18 +4,15 @@
 
 
 
-## ¡Bienvenido a **OrgaLib!** 📚 ![Python 3.9](https://img.shields.io/badge/python-3.9-blue.svg) ![Django 4.0](https://img.shields.io/badge/django-4.0-green.svg)
-
-
+## ¡Bienvenido a **PDFLib!** 📚 
 
 <br>
 
 
-$${\color{green}**OrgaLib!** 📚}$$
+$${\color{green}**PDFLib!** 📚}$$
 
-un programa basado en **Django** diseñado para la organización de bibliotecas físicas.
-Este proyecto organiza los libros por categorías, con datos relevantes como el autor, titulo, ISBN.. . 
-Además, cuenta con un sistema de usuario que permite marcar libros como favoritos y gestionar los libros prestados.
+un programa basado en **Django** diseñado para la organización de bibliotecas digitales.
+sube tus pdfs, agregales una categoria y deja que el programa y los metadatos se encarguen del resto. 
 
 ### $${\color{yellow}Características Destacadas 🌟}$$
 
@@ -23,18 +20,17 @@ Además, cuenta con un sistema de usuario que permite marcar libros como favorit
 |--------------------------|---------------------------------------------------------------------------------------------------------------|
 | **Catálogo de Libros**   | Organiza tu colección de libros de manera eficiente, clasificándolos por categorías para facilitar su búsqueda y acceso. |
 | **Datos Relevantes**     | Accede a información importante sobre cada libro, como el autor, el ISBN y otros detalles relevantes.          |
-| **Sistema de Usuarios**  | Los usuarios pueden crear cuentas para acceder a funciones personalizadas, como marcar libros favoritos y llevar un registro de los libros prestados. |
-| **Gestión de Préstamos** | Permite a las bibliotecas públicas gestionar los libros prestados, llevando un registro de qué usuarios han tomado prestado libros y en qué fechas. |
+| **Sistema de Usuarios**  | Los usuarios pueden crear cuentas para acceder a funciones personalizadas, como marcar libros favoritos. |
 | **Interfaz Amigable**    | Diseño intuitivo y fácil de usar, perfecto para usuarios de todos los niveles de experiencia sin necesidad de conocimientos avanzados de administración. |
-| **Modularidad**          | OrgaLib está diseñado de forma modular, lo que facilita su expansión y personalización según las necesidades específicas de cada biblioteca. |
+| **Modularidad**          | PDFLib está diseñado de forma modular, lo que facilita su expansión y personalización según las necesidades específicas de cada biblioteca. |
 
 <br>
 
 ### $${\color{red}Comienza Ahora 🚀}$$
 
-¡Empieza a organizar tu biblioteca con OrgaLib!
+¡Empieza a organizar tu biblioteca con PDFLib!
 
-1. **Clona el Repositorio:** `git clone https://github.com/AlvaroVerdeguer/orgaLib.git`
+1. **Clona el Repositorio:** `git clone https://github.com/AlvaroVerdeguer/PDFLib.git`
 
 2. **Instala las Dependencias:** Navega al directorio del proyecto y ejecuta `pip install -r requirements.txt` para instalar las dependencias.
 
@@ -44,7 +40,7 @@ Además, cuenta con un sistema de usuario que permite marcar libros como favorit
  
 5. **Ejecuta el Servidor:** Inicia el servidor de desarrollo con `python manage.py runserver` y accede a la aplicación en tu navegador.
 
-6. **Explora y Disfruta:** Explora todas las funcionalidades de OrgaLib y disfruta de una gestión eficiente de tu biblioteca.
+6. **Explora y Disfruta:** Explora todas las funcionalidades de PDFLib y disfruta de una gestión eficiente de tu biblioteca.
 
 <br>
 
@@ -55,7 +51,7 @@ Además, cuenta con un sistema de usuario que permite marcar libros como favorit
 ###  $${\color{lightblue}Contribuciones 🤝 }$$
 
 
-¡Las contribuciones son super bienvenidas! Si deseas mejorar OrgaLib, simplemente sigue estos pasos:
+¡Las contribuciones son super bienvenidas! Si deseas mejorar PDFLib, simplemente sigue estos pasos:
 
 1. Haz un fork del repositorio.
 2. Crea una nueva rama para tu función (`git checkout -b feature/nueva-funcion`).
@@ -64,6 +60,6 @@ Además, cuenta con un sistema de usuario que permite marcar libros como favorit
 5. Crea un pull request.
 
 ```diff
-@@ ¡Esperamos tus contribuciones para hacer crecer OrgaLib juntos! @@
+@@ ¡Esperamos tus contribuciones para hacer crecer PDFLib juntos! @@
 ```
 
