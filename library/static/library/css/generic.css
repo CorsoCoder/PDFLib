@@ -1,0 +1,175 @@
+/* Estilo general */
+body {
+    background-color: #333;
+    color: #ccc;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #333;
+    border: none;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #ccc !important;
+    /*display: flex;
+    align-items: center;*/
+    transition: background-color 0.3s ease;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+    background-color: #252525 !important;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+    background-color: #333;
+}
+
+.dropdown-menu>li>a {
+    color: #ccc !important;
+}
+
+.dropdown-menu>li>a:hover {
+    background-color: #252525 !important;
+}
+
+/* Formularios */
+form input,
+.select2-selection__rendered {
+    background-color: #333 !important;
+    color: #ccc !important;
+
+}
+
+.select2-selection__choice {
+    border: 1px solid #555 !important;
+    color: #ccc !important;
+    background-color: #333 !important;
+}
+
+.select2-container--default .select2-selection--multiple {
+    background-color: #333 !important;
+    border: 1px solid #555 !important;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #252525 !important;
+}
+
+.select2-container--default .select2-results__option[aria-selected=true] {
+    background-color: #252525 !important;
+}
+
+.select2-results__option {
+    background-color: #333 !important;
+}
+
+/* Tabla */
+table > tbody > tr:hover {
+    background-color: #252525 !important;
+}
+
+table > tbody > tr > td:hover {
+    background-color: #252525 !important;
+}
+
+table > tbody > tr > td > a {
+    color: #ff4d4d;
+    transition: color 0.3s ease;
+}
+
+table > tbody > tr > td > a:hover {
+    color: #cc0000;
+    text-decoration: none;
+}
+
+/* Botones */
+
+
+
+button:hover {
+/*    background-color: #cc0000 !important;*/
+    transform: scale(1.05);
+}
+
+/* Animaciones */
+@keyframes agitarse {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(5px); }
+}
+
+@keyframes resplandorRojo {
+    0% { box-shadow: 0 0 5px #ff4d4d; }
+    50% { box-shadow: 0 0 20px #ff4d4d; }
+    100% { box-shadow: 0 0 5px #ff4d4d; }
+}
+
+button:hover {
+    animation: agitarse 0.5s ease;
+}
+
+button.glow {
+    animation: resplandorRojo 1.5s infinite;
+}
+
+/* Estilo adicional */
+.pdf-cover {
+    width: 100px;
+    height: 140px;
+    margin-right: 15px;
+}
+
+.publication-date {
+    font-size: 0.8em;
+    color: #999;
+}
+
+/*
+.search-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    height: 40px;
+}*/
+
+.search-form>* {
+    margin: 5px;
+}
+
+/*
+.search-form input[type="text"],
+.search-form select {
+    flex: 1;
+    border-radius: 3px;
+    margin-right: 10px;
+    padding: 5px;
+    border: 1px solid #555;
+    font-size: 16px;
+    height: 100%;
+}
+*/
+
+.search-form button {
+    padding: 10px 20px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.search-form button:hover {
+    background-color: #cc0000;
+}
+
+@media (max-width: 768px) {
+
+}
+

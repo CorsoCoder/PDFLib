@@ -1,0 +1,61 @@
+{% extends "generic/base.html" %}
+{% load static %}
+{% block title %}Borrar libro{% endblock %}
+{% block content %}
+
+<form method="POST" class="delete-form" style="margin:0px 25% 5px 25%" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% include 'CRUD/form-style.html' with form=form %}
+    <p>¿Estás seguro de que quieres eliminar este ítem?</p>
+    <div class="delete-buttons">
+        <input type="submit" value="Sí" class="btn btn-danger" />
+        <a href="{% url 'search_books' %}" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+
+<style>
+    .delete-form {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .delete-form p {
+        margin-bottom: 20px;
+        color: #c82333;
+    }
+
+    .delete-buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .delete-buttons .btn {
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        color: white;
+    }
+
+    .delete-buttons .btn-danger {
+        background-color: #dc3545 !important;
+        border: none;
+    }
+
+    .delete-buttons .btn-danger:hover {
+        background-color: #c82333;
+    }
+
+    .delete-buttons .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+    }
+
+    .delete-buttons .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+</style>
+
+{% endblock %}

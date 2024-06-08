@@ -1,0 +1,54 @@
+{% extends 'generic/base.html' %}
+{% load static %}
+{% block title %}about{% endblock %}
+{% block content %}
+<style>
+    .center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    #waldoGame {
+        display: none; /* Ocultar la imagen inicialmente */
+        width: 90%;
+        height: auto;
+    }
+
+    @media (max-width: 768px) {
+        #waldoGame {
+            width: 100%; /* Ajustar el ancho al 100% en dispositivos pequeños */
+        }
+    }
+</style>
+<div class="center">
+    <h3>Web Page Developed by <span style="color:#2D9EC0">Álvaro Verdeguer</span> with <span style="color:#51BE95">Django</span> and <span style="color:red;">&lt;3</span> </h3>
+</div>
+<hr>
+<div class="center">
+    <p>Selecciona una dificultad para jugar a ¿Dónde está Waldo?</p>
+    <select id="choose-selector" class="select-waldo" onchange="changeImage()">
+        <option value="/media/waldo/waldoEasy.jpg">Fácil</option>
+        <option value="/media/waldo/waldoMedium.jpg" selected>Normal</option>
+        <option value="/media/waldo/waldoHigh.jpg">Difícil</option>
+        <option value="/media/waldo/waldoExtreme.jpg">Extremo</option>
+    </select>
+</div>
+<br>
+<div class="center">
+    <img id="waldoGame" src="">
+</div>
+
+<script>
+    function changeImage() {
+        var selectedImage = document.getElementById("choose-selector").value;
+        document.getElementById('waldoGame').src = selectedImage;
+        document.getElementById('waldoGame').style.display = 'block'; // Mostrar la imagen al cambiar la selección
+    }
+
+    // Llama a la función changeImage una vez para mostrar la imagen predeterminada
+    changeImage();
+</script>
+{% endblock %}

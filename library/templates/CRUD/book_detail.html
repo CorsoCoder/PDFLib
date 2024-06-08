@@ -1,0 +1,94 @@
+{% extends "generic/base.html" %}
+{% load static %}
+{% block title %}{{ book.title }}{% endblock %}
+
+{% block content %}
+<style>
+    @media (max-width: 960px) {
+        .btn-blue,.btn-danger,.btn-primary {
+            margin:0px 0px 5px 0px;
+            font-size: 100%;
+        }
+    }
+    a{
+        margin:0px 10px 10px 0px !important;
+    }
+    #the-canvas {
+        background-color: gray;
+    }
+</style>
+<div class="container myContainer">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="col-md-5">
+                <div class="img-rounded">
+                    <canvas id="the-canvas" style="height: 480px;width:320px;"></canvas>
+                </div>
+                <br><br><br>
+            </div>
+            <div class="col-md-6 col-md-offset-1">
+                <h2 class="text-center">{{ book.title }}</h2>
+                <hr>
+                <br>
+                <h4>Autor: {{ book.author }}</h4>
+                <h4>Categorías:
+                    {% for category in book.category.all %}
+                    <a href="{% url 'search_books' %}?category={{ category.name }}">{{ category.name }}</a>
+                {% endfor %}
+                </h4>
+                <h4>Subject: {{ book.subject }}</h4>
+                <h4>Descripción: {{ book.description }}</h4>
+                <small>Páginas: {{ book.paginas }}</small>
+                <br>
+                <small>Fecha: {{ book.creation_date }}</small>
+
+                <br>
+                <br>
+                <a href="/media/{{ book.pdf_file }}" target="_blank">Descargar PDF</a>
+                <br><br>
+                {% if user.is_authenticated %}
+                <a style="margin: 10px;" href="{% url 'update_book' book.id  %}"><button type="button" class="btn btn-blue">actualizar</button></a>
+                <a style="margin: 10px;" href="{% url 'delete_book' book.id  %}"><button type="button" class="btn btn-danger">borrar</button></a>
+                {% if fav %}
+                    <a style="margin: 10px;" href="{% url 'removefav' fav.book.id %}"><button type="button" class="btn btn-danger"><i class="fas fa-heart-broken"></i></button></a>
+                {% else %}
+                    <a style="margin: 10px;" href="{% url 'addtofav' book.id %}"><button type="button" class="btn btn-danger"><i class="fa-solid fa-heart"></i></button></a>
+                {% endif %}
+                
+                {% else %}
+                    <p style="color:red">registrate para: editar / borrar / <i class="fa-solid fa-heart"></i> / coger prestado / el libro</p>
+                {% endif %}
+                <hr>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    pdfjsLib.getDocument('/media/{{ book.pdf_file }}').promise.then(function(pdf) {
+        // Get the first page of the PDF
+        pdf.getPage(1).then(function(page) {
+            var scale = 1.5;
+            var viewport = page.getViewport({ scale: scale });
+
+            var canvas = document.getElementById('the-canvas');
+            var context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            var renderContext = {
+                canvasContext: context,
+                viewport: viewport
+            };
+
+            // Render the first page of the PDF on the canvas
+            page.render(renderContext).promise.then(function() {
+                // Change canvas background color to blue
+                canvas.style.backgroundColor = 'blue';
+            });
+        });
+    }).catch(function(error) {
+        console.error('Error loading PDF:', error);
+    });
+</script>
+{% endblock %}

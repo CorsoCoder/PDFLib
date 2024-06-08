@@ -1,0 +1,63 @@
+{% extends 'generic/base.html' %}
+
+{% load static %}
+{% block title %} Search {% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-12">
+        <img src="{% static 'library/img/gifs/banner2.gif' %}" class="img-responsive center-block" alt="Banner">
+    </div>
+</div>
+
+<br>
+<br>
+
+<style>
+
+
+    .col-lg-12 > img {
+        
+        width: 500px;
+        height: auto;
+    }
+    .search-form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .search-form input[type="text"],
+    .search-form select {
+        flex: 1;
+        margin-right: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+
+
+    @media (max-width: 768px) {
+        .search-form input[type="text"],
+        .search-form select,
+        .search-form button {
+            flex: 1 0 100%;
+            margin-bottom: 10px;
+        }
+    }
+</style>
+
+<div class="container myContainer">
+    <!-- Banner centrado -->
+    <form method="GET" action="{% url 'search_books' %}" class="search-form">
+        <input type="text" name="q" placeholder="Buscar por título, autor, descripción o asunto" value="{{ query }}">
+        <button type="submit">Buscar</button>
+    </form>
+</div>
+
+{% endblock %}

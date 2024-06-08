@@ -1,0 +1,207 @@
+{% extends "generic/base.html" %}
+{% load static %}
+{% block title %}Libros{% endblock %}
+
+{% block content %}
+    <style>
+    .search-form {
+        margin: 20px 0;
+    }
+
+    .book-list {
+        background-color: #333;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        margin: 20px 0;
+        overflow: hidden;
+    }
+
+    .book-card {
+        background-color: #444;
+        margin: 10px;
+        border-radius: 5px;
+        padding: 15px;
+    }
+
+    .book-card .cover-container canvas {
+        width: 100px;
+        height: 140px;
+    }
+
+    .book-card .title {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    .book-card .publication-date {
+        font-size: 0.8em;
+        color: #999;
+    }
+
+    .book-card .categories a {
+        display: inline-block;
+        color: #ff4d4d;
+        margin-right: 5px;
+    }
+
+    .book-card .actions {
+        margin-top: 10px;
+    }
+
+    .book-card .actions .btn {
+        margin-right: 5px;
+    }
+
+    @media screen and (max-width: 600px) {
+        .book-card {
+            text-align: center;
+        }
+
+        .book-card .actions {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .book-card .actions .btn {
+            margin: 5px 0;
+        }
+    }
+    </style>
+
+    <form method="GET" action="{% url 'search_books' %}" class="search-form">
+        <div class="form-group">
+            <input type="text" class="form-control" name="q" placeholder="Buscar por título, autor, descripción o asunto" value="{{ query }}">
+        </div>
+        <div class="form-group">
+            <select multiple class="form-control select2" name="category">
+                <option value="">Todas las categorías</option>
+                {% for category in categories %}
+                    <option value="{{ category.name }}" {% if category.name == category %}selected{% endif %}>{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-danger">Buscar</button>
+    </form>
+
+    <div class="book-list">
+        {% for book in books %}
+            <div class="book-card row">
+                <div class="cover-container col-md-2">
+                    <a href="{% url 'detail_book' book.id %}">
+                        <canvas class="pdf-cover" id="cover-canvas-{{ book.id }}"
+                                data-pdf-url="/media/{{ book.pdf_file }}" data-canvas-id="cover-canvas-{{ book.id }}">
+                        </canvas>
+                    </a>
+                </div>
+                <div class="info-container col-md-10">
+                    <div class="title">
+                        <a href="{% url 'detail_book' book.id %}">{{ book.title }}</a>
+                        <div class="publication-date">{{ book.creation_date }}</div>
+                    </div>
+                    <div class="categories">
+                        {% for category in book.category.all %}
+                            <a href="{% url 'search_books' %}?category={{ category.name }}">{{ category.name }}</a>
+                        {% endfor %}
+                    </div>
+                    <div>
+                        <strong>Autor:</strong> {{ book.author }}<br>
+                        <strong>Editorial:</strong> {{ book.creation_date }}<br>
+                        <strong>N° de páginas:</strong> {{ book.paginas }}<br>
+                        <strong>Descripción:</strong> {{ book.description }}<br>
+                        <strong>Asunto:</strong> {{ book.subject }}<br>
+                    </div>
+                    <div class="actions">
+                        <a href="/media/{{ book.pdf_file }}" download class="btn btn-success">Descargar</a>
+                        {% if user.is_authenticated %}
+                            <a id="ocultar" href="{% url 'update_book' book.id %}" class="btn btn-primary">Actualizar</a>
+                            <a id="ocultar" href="{% url 'delete_book' book.id %}" class="btn btn-danger">Borrar</a>
+                            
+                            
+                            {% if fav %}
+                                <!-- Botón para quitar de favoritos -->
+                                <a style="margin: 10px;" href="{% url 'removefav' book.id %}"><button type="button" class="btn btn-danger"><i class="fas fa-heart-broken"></i></button></a>
+                            {% else %}
+                                <!-- Botón para agregar a favoritos -->
+                                <a style="margin: 10px;" href="{% url 'addtofav' book.id %}"><button type="button" class="btn btn-danger"><i class="fa-solid fa-heart"></i></button></a>
+                            {% endif %}                        
+                        
+                            {% else %}<i class="fas fa-heart-broken"></i>
+                            <span>Regístrate para <i class="fa-solid fa-heart"></i> libros</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div>No se encontraron libros</div>
+        {% endfor %}
+    </div>
+
+    <style>
+        .pager > li {
+            background-color: #333 !important;
+            border : none !important;
+        }
+        .pager > li > a {
+            background-color: #333 !important;
+            border : none !important;
+
+        }
+    </style>
+    <nav class="myContainer">
+        <ul class="pager">
+            {% if books.has_previous %}
+                <li class="previous"><a href="?page={{ books.previous_page_number }}"><img src="{% static 'library/img/gifs/prev1.gif' %}"></a></a></li>
+            {% else %}
+                <li class="previous disabled"><a href="#"><img src="{% static 'library/img/gifs/prev1.gif' %}"></a></li>
+            {% endif %}
+            {{ books.number }} / {{ books.paginator.num_pages }} Página
+            {% if books.has_next %}
+                <li class="next"><a href="?page={{ books.next_page_number }}"><img src="{% static 'library/img/gifs/next1.gif' %}"></a></li>
+            {% else %}
+                <li class="next disabled"><a href="#"><img src="{% static 'library/img/gifs/next1.gif' %}"></a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <script>
+        // Función para cargar y mostrar la portada de un PDF
+        function renderPdfCover(pdfUrl, canvasId) {
+            pdfjsLib.getDocument(pdfUrl).promise.then(function(pdf) {
+                pdf.getPage(1).then(function(page) {
+                    var maxWidth = 100;
+                    var maxHeight = 140;
+                    var viewport = page.getViewport({ scale: 1 });
+                    var scale = Math.min(maxWidth / viewport.width, maxHeight / viewport.height);
+                    var scaledWidth = viewport.width * scale;
+                    var scaledHeight = viewport.height * scale;
+                    var canvas = document.getElementById(canvasId);
+                    canvas.width = scaledWidth;
+                    canvas.height = scaledHeight;
+                    var context = canvas.getContext('2d');
+                    var renderContext = {
+                        canvasContext: context,
+                        viewport: page.getViewport({ scale: scale })
+                    };
+                    page.render(renderContext);
+                });
+            }).catch(function(error) {
+                console.error('Error loading PDF:', error);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var coverImages = document.querySelectorAll('.pdf-cover');
+            coverImages.forEach(function(image) {
+                var pdfUrl = image.dataset.pdfUrl;
+                var canvasId = image.dataset.canvasId;
+                renderPdfCover(pdfUrl, canvasId);
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
+    </script>
+{% endblock %}

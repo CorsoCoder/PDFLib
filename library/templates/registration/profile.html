@@ -1,0 +1,125 @@
+{% extends "generic/base.html" %}
+{% load static %}
+{% block title %}profile{% endblock %}
+
+{% block content %}
+<style>
+  @media (max-width: 960px) {
+  .email3{
+        display: none;
+      }
+
+  }
+
+  .panel-heading
+  {
+    background-color:#333  !important;
+  }
+  
+  .panel-title{
+    text-decoration: none;
+    color:white;
+  }
+  td{
+    text-decoration: none;
+    color:white  ;
+  }
+  .panel-body{
+    background-color: #555;
+  }
+.tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #286090 !important;
+  color: #fff;
+  text-align: center;
+  border-radius: 1px;
+  padding: 5px 0;
+  margin:5px;
+  position: absolute;
+  z-index: 1;
+}
+
+</style>
+
+<div class="container">
+      <div class="row">
+
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+
+
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">{{ reader.name }}</h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <a href="/media/{{ reader.photo }}"><div class="col-md-3 col-lg-3 " style="display:flex;align-items:center"> <img alt="User Pic" src="/media/{{ reader.photo }}" class="img-circle img-responsive"> </div></a>
+                <div class=" col-md-9 col-lg-9 ">
+                  <table class="table table-user-information">
+                    <tbody>
+                      <tr>
+                        <td>Usuario:</td>
+                        <td>{{ reader.user }}</td>
+                      </tr>
+                      <tr>
+                        <td>Nombre:</td>
+                        <td>{{ reader.name }}</td>
+                      </tr>
+                      <tr>
+                        <td>Límite de libros prestados</td>
+                        <td>{{ reader.max_borrowing }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <a href="{% url 'favourite' %}" class="btn btn-sm btn-danger"><i class="fa-solid fa-heart"></i> libros</a>
+                  {% if user.is_superuser %}
+                  <a href="{% url 'create_book' %}" class="btn btn-sm btn-danger">añadir libro</a>
+                  {% endif %}                  <br>
+                  <br>
+
+                  <a href="{% url 'change_password' %}" class="btn btn-sm btn-danger">cambiar <small><i class="fa-solid fa-asterisk"></i><i class="fa-solid fa-asterisk"></i><i class="fa-solid fa-asterisk"></i></small></a>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="panel-footer">
+
+
+
+
+
+                <button title="copiar" onclick="copy()" style="width: 50%;"data-original-title="Broadcast Message" data-toggle="tooltip" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"> &nbsp; </i><span id="copy" class="email3"> {{ reader.email }}</span></button>
+                <div id="tooltip" class="tooltiptext">
+                  <span >copiado!</span>
+                </div>
+
+                <span class="pull-right">
+                  <a href="{% url 'user_logout' %}"  class="btn btn-sm btn-danger" >cerrar sesión <small><i class="glyphicon glyphicon-remove"></i></small></a>
+                </span>
+
+
+            </div>
+          </div>
+          <p>¿se te ha olvidado la contraseña? contacta con el administrador por <a title="alvaroverdeguer@addinformatica.com" href="mailto:verduxo0@gmail.com" >correo</a></p>
+
+          <script>
+            function copy(){
+                  var tooltip = document.getElementById("tooltip");
+                  tooltip.style.visibility = 'visible';
+                  var copyText = document.getElementById("copy");
+                  var textArea = document.createElement("textarea");
+                  textArea.value = copyText.textContent;
+                  document.body.appendChild(textArea);
+                  textArea.select();
+                  document.execCommand("Copy");
+                  textArea.remove();
+            }
+            setTimeout(() => {
+            const box = document.getElementById('tooltip');
+            box.style.display = 'none'; }, 3000);
+            </script>
+
+{% endblock %}
